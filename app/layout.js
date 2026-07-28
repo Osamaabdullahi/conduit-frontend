@@ -1,6 +1,7 @@
 import "./globals.css";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Conduit — Weather & Agricultural Risk API",
@@ -15,6 +16,8 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+
+        <Analytics />
       </body>
     </html>
   );
