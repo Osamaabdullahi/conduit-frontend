@@ -10,15 +10,15 @@ export default function SmartHydrology() {
             </h2>
           </a>
           <p className="mb-5.5 max-w-[42ch] text-[0.98rem] text-ink-soft">
-            Our hydrology model calculates localized runoff risk in real-time.
-            Don&apos;t waste fertilizer on a field that&apos;s about to be
-            washed out.
+            Our hydrology model scores localized runoff risk in real time from
+            rainfall totals and barometric pressure trend. Don&apos;t waste
+            fertilizer on a field that&apos;s about to be washed out.
           </p>
           <ul className="flex flex-col gap-2.5">
             {[
-              "48-hour risk horizon",
-              "Slope-corrected calculations",
-              "Validated on tropical soil profiles",
+              "6-hour rolling rainfall window",
+              "Dual rain-gauge cross-check",
+              "0–100 score across four risk tiers",
             ].map((item) => (
               <li
                 key={item}
@@ -43,14 +43,15 @@ export default function SmartHydrology() {
           </div>
           <pre className="whitespace-pre-wrap break-words font-mono text-[0.8rem] leading-relaxed text-[#d7d8c8]">
             <code>{`{
-  "location": "Mola_Ridge_04",
-  "prediction": {
-    "runoff_risk_score": 82,
-    "confidence_interval": 0.05,
-    "recommendation": "DELAY_APPLICATION",
-    "risk_factors": ["imminent_heavy_rain", "high_soil_saturation"]
+  "station_name": "Site JKUAT",
+  "severity": "high",
+  "runoff_risk_score": 68,
+  "recommendation": "Delay fertilizer application",
+  "rainfall_summary": {
+    "effective_rainfall_mm": 24.5,
+    "window_hours": 6
   },
-  "timestamp": "2026-07-09T14:20:11Z"
+  "pressure_trend": "falling"
 }`}</code>
           </pre>
         </div>

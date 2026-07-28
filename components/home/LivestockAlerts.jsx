@@ -9,14 +9,14 @@ export default function LivestockAlerts() {
           </div>
           <pre className="whitespace-pre-wrap break-words font-mono text-[0.8rem] leading-relaxed text-[#d7d8c8]">
             <code>{`{
-  "event": "alert.thermal_stress",
-  "data": {
-    "station_id": "STN_H042",
-    "metric": "WBGT_VALUE",
-    "current_value": 29.6,
-    "threshold": 28.0,
-    "classification": "MODERATE_STRESS",
-    "actions": ["activate_cooling_systems", "increase_hydration"]
+  "event": "alert.created",
+  "alert": {
+    "alert_type": "livestock",
+    "severity": "moderate",
+    "station": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
+    "wbgt_value": 24.6,
+    "threshold": 22.0,
+    "message": "WBGT 24.6°C exceeds the 22.0°C threshold at Site JKUAT."
   }
 }`}</code>
           </pre>
@@ -31,8 +31,8 @@ export default function LivestockAlerts() {
           </a>
           <p className="mb-5.5 max-w-[42ch] text-[0.98rem] text-ink-soft">
             Protect livestock yield with automated WBGT (Wet Bulb Globe
-            Temperature) monitoring. Configure webhooks to trigger fans or
-            misting systems the millisecond thresholds are breached.
+            Temperature) monitoring. Configure a webhook and get notified the
+            moment a station's WBGT crosses your comfort threshold.
           </p>
 
           <a

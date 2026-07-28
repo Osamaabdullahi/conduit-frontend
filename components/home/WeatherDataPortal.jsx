@@ -20,7 +20,7 @@ export default function WeatherDataPortal() {
 
             <ul className="mb-7 flex flex-col gap-2.5">
               {[
-                "Browse all weather stations across the  country",
+                "Browse all weather stations across the country",
                 "View current conditions with live metric cards",
                 "Preview datasets before downloading",
                 "Export historical data in CSV or JSON format",
@@ -55,41 +55,6 @@ export default function WeatherDataPortal() {
 
           <div className="space-y-4">
             <div className="rounded-lg border border-line bg-bg p-5 transition-shadow hover:shadow-md">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h4 className="font-display text-base font-semibold text-ink">
-                    JKUAT Main Station
-                  </h4>
-                  <p className="text-sm text-ink-soft">
-                    Jomo Kenyatta University, Juja
-                  </p>
-                </div>
-                <span className="inline-block rounded-full bg-green px-2.5 py-0.5 text-xs font-medium text-white">
-                  Active
-                </span>
-              </div>
-              <div className="mt-3 flex gap-4 text-sm text-ink-soft">
-                <span>-1.0917, 37.0169</span>
-                <span>•</span>
-                <span>1,550m</span>
-              </div>
-              <div className="mt-3 grid grid-cols-3 gap-2 rounded-md bg-bg-soft p-3">
-                <div className="text-center">
-                  <p className="text-[0.6rem] uppercase text-muted">Temp</p>
-                  <p className="text-sm font-semibold text-ink">22.4°C</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-[0.6rem] uppercase text-muted">Humidity</p>
-                  <p className="text-sm font-semibold text-ink">64.8%</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-[0.6rem] uppercase text-muted">Wind</p>
-                  <p className="text-sm font-semibold text-ink">5.8 m/s</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-line bg-bg p-5 transition-shadow hover:shadow-md">
               <div className="flex items-center gap-3">
                 <span className="text-xl">📤</span>
                 <div>
@@ -115,6 +80,20 @@ export default function WeatherDataPortal() {
                   Preview
                 </span>
               </div>
+
+              <div className="mt-4 rounded-md bg-ink p-4">
+                <pre className="whitespace-pre-wrap break-words font-mono text-[0.65rem] leading-relaxed text-[#d7d8c8]">
+                  <code>{`time,temperature,humidity,pressure,wind_speed,rain,heat_index
+2026-07-28 07:00:00,17.3,78.5,852.3,0.6,0.0,17.8
+2026-07-28 06:45:00,17.1,79.2,852.5,0.8,0.0,17.6
+2026-07-28 06:30:00,16.8,80.1,852.8,0.5,0.0,17.2
+2026-07-28 06:15:00,16.5,81.0,853.0,0.7,0.0,16.9
+2026-07-28 06:00:00,16.2,81.8,853.2,0.9,0.0,16.5`}</code>
+                </pre>
+              </div>
+              <p className="mt-2 text-[0.65rem] text-muted font-mono">
+                CSV preview · 5 rows of 10,000 available
+              </p>
             </div>
           </div>
         </div>

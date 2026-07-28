@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import useAuthStore from "../store";
+import { apiClient } from "../libs/api";
 
 // Base navigation links (shown to all users)
 const BASE_NAV_LINKS = [
@@ -25,7 +26,23 @@ export default function Navbar() {
   const router = useRouter();
 
   // Get auth state from store
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const { user, isAuthenticated, logout, setUser } = useAuthStore();
+
+  // The persisted `user` object in the store is only ever set at login
+  // time. If someone is already logged in from before is_staff was
+  // added to /auth/me/ (or their staff status changed server-side
+  // since), the cached object won't reflect it and the Admin link
+  // would silently never appear. Refresh it once, quietly, whenever
+  // we have a session but no is_staff field on the cached user yet.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    if (user && typeof user.is_staff !== "undefined") return;
+
+    apiClient
+      .get("/auth/me/")
+      .then((me) => setUser(me))
+      .catch(() => {});
+  }, [isAuthenticated, user, setUser]);
 
   // Build navigation links based on authentication status
   const NAV_LINKS = isAuthenticated

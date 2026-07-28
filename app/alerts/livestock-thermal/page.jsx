@@ -32,8 +32,9 @@ export default function LivestockAlertsPage() {
               {" "}
               WBGT (Wet Bulb Globe Temperature)
             </strong>
-            . When environmental conditions exceed safe thresholds, automated
-            alerts are sent to subscribed agricultural systems.
+            , read directly from each weather station's measurements. When a
+            station's WBGT crosses your configured threshold, a webhook is fired
+            to your subscription URL.
           </p>
         </section>
 
@@ -73,9 +74,9 @@ export default function LivestockAlertsPage() {
               Solution
             </h3>
             <p className="text-sm text-green-700">
-              A webhook-based alerting system that continuously evaluates WBGT
-              values and triggers automated notifications when thresholds are
-              exceeded.
+              A webhook-based alerting system that evaluates WBGT on every new
+              measurement and fires signed HTTP notifications the moment a
+              station crosses your threshold.
             </p>
             <div className="mt-4 rounded-md bg-white/50 p-3">
               <p className="text-sm font-medium text-green-700">
@@ -95,7 +96,7 @@ export default function LivestockAlertsPage() {
               <div className="mb-2 text-2xl">📊</div>
               <h4 className="mb-1 font-semibold text-ink">Input</h4>
               <p className="text-sm text-ink-soft">
-                Real-time WBGT values from weather data pipeline
+                WBGT value on each new weather measurement
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg-soft p-5 text-center">
@@ -110,7 +111,44 @@ export default function LivestockAlertsPage() {
               <div className="mb-2 text-2xl">🔔</div>
               <h4 className="mb-1 font-semibold text-ink">Action</h4>
               <p className="text-sm text-ink-soft">
-                Trigger webhook notifications
+                Trigger a signed webhook notification
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Severity Tiers */}
+        <section className="mb-12">
+          <h2 className="mb-4 font-display text-2xl font-semibold text-ink">
+            Severity Tiers
+          </h2>
+          <p className="mb-4 text-ink-soft leading-relaxed">
+            Once WBGT is at or above the threshold, severity scales with how far
+            above it the reading is:
+          </p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="rounded-lg border border-line bg-bg-soft p-5">
+              <span className="rounded-md bg-accent-soft px-2.5 py-1 text-[0.68rem] font-medium text-accent">
+                Moderate
+              </span>
+              <p className="mt-2 text-sm text-ink-soft">
+                WBGT at or up to 3°C above threshold
+              </p>
+            </div>
+            <div className="rounded-lg border border-line bg-bg-soft p-5">
+              <span className="rounded-md bg-accent-soft px-2.5 py-1 text-[0.68rem] font-medium text-accent">
+                High
+              </span>
+              <p className="mt-2 text-sm text-ink-soft">
+                3°C to 6°C above threshold
+              </p>
+            </div>
+            <div className="rounded-lg border border-line bg-bg-soft p-5">
+              <span className="rounded-md bg-red-50 px-2.5 py-1 text-[0.68rem] font-medium text-red-600">
+                Extreme
+              </span>
+              <p className="mt-2 text-sm text-ink-soft">
+                6°C or more above threshold
               </p>
             </div>
           </div>
@@ -127,13 +165,15 @@ export default function LivestockAlertsPage() {
                 1. WBGT Data Source
               </h4>
               <p className="text-sm text-ink-soft">
-                Derived from weather station sensor data.
+                Pre-computed WBGT stored on each incoming weather measurement —
+                the alert engine reads it as-is, it never recalculates it.
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg p-5">
               <h4 className="mb-2 font-semibold text-ink">2. Alert Engine</h4>
               <p className="text-sm text-ink-soft">
-                Continuously evaluates WBGT against configured thresholds.
+                Evaluates each new measurement's WBGT against the threshold,
+                independently per station.
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg p-5">
@@ -141,7 +181,9 @@ export default function LivestockAlertsPage() {
                 3. Subscription System
               </h4>
               <p className="text-sm text-ink-soft">
-                Farmers register webhook URL, threshold level, and farm type.
+                From your dashboard, register a webhook URL and optionally
+                narrow it to livestock alerts and/or a single station. A signing
+                secret is generated for you and shown once.
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg p-5">
@@ -149,8 +191,10 @@ export default function LivestockAlertsPage() {
                 4. Webhook Dispatcher
               </h4>
               <p className="text-sm text-ink-soft">
-                Sends HTTP POST requests to external systems with retry logic
-                and failure handling.
+                Sends an HTTP POST signed with HMAC-SHA256 (
+                <code className="font-mono text-xs">X-Conduit-Signature</code>).
+                Failed deliveries are retried automatically every 5 minutes up
+                to a configured attempt limit.
               </p>
             </div>
           </div>
@@ -163,17 +207,20 @@ export default function LivestockAlertsPage() {
           </h2>
           <div className="rounded-lg border border-line bg-bg-soft p-6">
             <p className="text-ink-soft">
-              Prevents duplicate alerts during sustained high-temperature
-              periods by grouping events into single notifications.
+              While a station's WBGT stays at or above threshold, no duplicate
+              alert is created — the existing one stays open. Once WBGT drops
+              back below the threshold, the alert is resolved (and a
+              resolved-event webhook fires), so the next crossing opens a fresh
+              alert.
             </p>
             <div className="mt-3 flex items-center gap-3 text-sm">
               <span className="inline-block rounded-full bg-accent/10 px-3 py-1 text-accent font-mono text-xs">
                 No spam
               </span>
               <span className="text-ink-soft">•</span>
-              <span className="text-ink-soft">Smart grouping</span>
+              <span className="text-ink-soft">One alert per episode</span>
               <span className="text-ink-soft">•</span>
-              <span className="text-ink-soft">Actionable alerts</span>
+              <span className="text-ink-soft">Resolved events too</span>
             </div>
           </div>
         </section>
@@ -193,7 +240,7 @@ export default function LivestockAlertsPage() {
               </span>
               <span className="text-muted">→</span>
               <span className="whitespace-nowrap font-medium text-ink">
-                Database
+                Ingestion
               </span>
               <span className="text-muted">→</span>
               <span className="whitespace-nowrap font-medium text-ink">
@@ -205,11 +252,11 @@ export default function LivestockAlertsPage() {
               </span>
               <span className="text-muted">→</span>
               <span className="whitespace-nowrap font-medium text-ink">
-                Webhook Dispatch
+                Signed Webhook Dispatch
               </span>
               <span className="text-muted">→</span>
               <span className="whitespace-nowrap font-medium text-ink">
-                External Farm Systems
+                Your Subscription URL
               </span>
             </div>
           </div>
@@ -227,19 +274,27 @@ export default function LivestockAlertsPage() {
             </div>
             <pre className="whitespace-pre-wrap break-words font-mono text-[0.8rem] leading-relaxed text-[#d7d8c8]">
               <code>{`{
-  "event": "alert.thermal_stress",
-  "data": {
-    "station_id": "STN_H042",
-    "metric": "WBGT_VALUE",
-    "current_value": 29.6,
+  "event": "alert.created",
+  "alert": {
+    "id": "a7d3f1b0-9c4e-4a2d-8f1a-2b3c4d5e6f70",
+    "alert_type": "livestock",
+    "severity": "moderate",
+    "message": "Livestock heat stress at Site JKUAT: WBGT 24.6°C exceeds the 22.0°C threshold.",
+    "station": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
+    "is_active": true,
+    "wbgt_value": 24.6,
     "threshold": 22.0,
-    "classification": "MODERATE_STRESS",
-    "actions": ["activate_cooling_systems", "increase_hydration"]
-  },
-  "farm_type": "dairy",
-  "timestamp": "2026-07-09T14:20:11Z"
+    "created_at": "2026-07-09T14:20:11Z",
+    "resolved_at": null
+  }
 }`}</code>
             </pre>
+            <p className="mt-3 text-xs text-muted">
+              Delivered with an{" "}
+              <code className="font-mono">X-Conduit-Signature</code> header —{" "}
+              <code className="font-mono">sha256=&lt;hmac&gt;</code> of the raw
+              body, computed with your subscription's secret.
+            </p>
           </div>
         </section>
 

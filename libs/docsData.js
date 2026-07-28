@@ -25,17 +25,6 @@ export const nav = [
     ],
   },
   {
-    title: "Alerts & Webhooks",
-    items: [
-      { id: "alerts-list", label: "List Alerts" },
-      { id: "alert-detail", label: "Alert Detail" },
-      { id: "webhooks-list-create", label: "List / Create Webhooks" },
-      { id: "webhook-detail", label: "Webhook Detail / Delete" },
-      { id: "webhook-test", label: "Send Test Ping" },
-      { id: "webhook-deliveries", label: "Delivery History" },
-    ],
-  },
-  {
     title: "Reference",
     items: [
       { id: "data-model", label: "Data Model" },
@@ -145,7 +134,11 @@ export const endpoints = [
     title: "Station — Current Weather",
     desc: "Get the most recent weather observation for a single station by slug. Returns 404 if no measurements exist yet for the station.",
     params: [
-      { name: "slug", type: "string", desc: "Unique station identifier (slug)" },
+      {
+        name: "slug",
+        type: "string",
+        desc: "Unique station identifier (slug)",
+      },
     ],
     response: `{
   "id": "9e31bf67-7cf1-4f8d-a3b4-4ffbd556a4d0",
@@ -175,7 +168,11 @@ export const endpoints = [
     title: "Timeline",
     desc: "Fetch aggregated time-series data for a station with a customizable resolution. If start/end are omitted, defaults to the 24 hours before the latest measurement.",
     params: [
-      { name: "slug", type: "string", desc: "Unique station identifier (slug)" },
+      {
+        name: "slug",
+        type: "string",
+        desc: "Unique station identifier (slug)",
+      },
       {
         name: "resolution",
         type: "string",
@@ -216,11 +213,27 @@ export const endpoints = [
     title: "Historical Data",
     desc: "Retrieve paginated, unaggregated historical weather observations from a station, newest first.",
     params: [
-      { name: "slug", type: "string", desc: "Unique station identifier (slug)" },
-      { name: "start_date", type: "string", desc: "ISO date — only records on/after this date" },
-      { name: "end_date", type: "string", desc: "ISO date — only records on/before this date" },
+      {
+        name: "slug",
+        type: "string",
+        desc: "Unique station identifier (slug)",
+      },
+      {
+        name: "start_date",
+        type: "string",
+        desc: "ISO date — only records on/after this date",
+      },
+      {
+        name: "end_date",
+        type: "string",
+        desc: "ISO date — only records on/before this date",
+      },
       { name: "page", type: "integer", desc: "Page number for pagination" },
-      { name: "page_size", type: "integer", desc: "Results per page (default 100, max 1000)" },
+      {
+        name: "page_size",
+        type: "integer",
+        desc: "Results per page (default 100, max 1000)",
+      },
     ],
     response: `{
   "count": 453356,
@@ -257,9 +270,21 @@ export const endpoints = [
     title: "Daily Summary",
     desc: "Get daily aggregated weather statistics including min, max, and average temperatures. Defaults to the last 30 days if no range is given.",
     params: [
-      { name: "slug", type: "string", desc: "Unique station identifier (slug)" },
-      { name: "start", type: "string", desc: "ISO 8601 window start — must be supplied together with end" },
-      { name: "end", type: "string", desc: "ISO 8601 window end — must be supplied together with start" },
+      {
+        name: "slug",
+        type: "string",
+        desc: "Unique station identifier (slug)",
+      },
+      {
+        name: "start",
+        type: "string",
+        desc: "ISO 8601 window start — must be supplied together with end",
+      },
+      {
+        name: "end",
+        type: "string",
+        desc: "ISO 8601 window end — must be supplied together with start",
+      },
     ],
     response: `{
   "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
@@ -276,179 +301,6 @@ export const endpoints = [
       "wind": { "speed_mps": 0.7, "direction_deg": 112.0, "gust_max_mps": 2.1 },
       "light": { "visible_lux": 210.0, "infrared": 198.0, "ultraviolet": 0.4 },
       "indices": { "heat_index_c": 17.1, "wet_bulb_c": 15.0, "wbgt_c": 12.4 }
-    }
-  ]
-}`,
-  },
-];
-
-// ============================================================================
-// Alerts & webhooks. List/detail alerts use X-API-KEY (same as telemetry).
-// Webhook subscriptions are managed from your dashboard once you're signed
-// in — see the Webhooks page.
-// ============================================================================
-
-export const alertEndpoints = [
-  {
-    id: "alerts-list",
-    method: "GET",
-    path: "/alerts/",
-    title: "List Alerts",
-    desc: "Retrieve hydrology and livestock alerts raised from live telemetry. Authenticated with X-API-KEY, same as the weather endpoints.",
-    params: [
-      { name: "type", type: "string", desc: "Filter by hydrology or livestock" },
-      { name: "station", type: "string", desc: "Filter by station slug" },
-      { name: "active", type: "boolean", desc: "true or false — filter by whether the alert is still open" },
-      { name: "page", type: "integer", desc: "Page number for pagination" },
-    ],
-    response: `{
-  "count": 2,
-  "next": null,
-  "previous": null,
-  "results": [
-    {
-      "id": "6f1c9e2a-2b0e-4b7a-9b7a-5a1f2c3d4e5f",
-      "station_name": "Site JKUAT",
-      "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
-      "alert_type": "hydrology",
-      "severity": "high",
-      "message": "Rapid pressure drop with active rainfall — elevated runoff risk.",
-      "is_active": true,
-      "resolved_at": null,
-      "runoff_risk_score": 82.0,
-      "rainfall_summary": { "last_hour_mm": 12.4, "last_24h_mm": 38.0 },
-      "pressure_trend": "falling",
-      "recommendation": "DELAY_APPLICATION",
-      "wbgt_value": null,
-      "threshold": null,
-      "created_at": "2026-07-09T14:20:11Z",
-      "updated_at": "2026-07-09T14:20:11Z"
-    },
-    {
-      "id": "a7d3f1b0-9c4e-4a2d-8f1a-2b3c4d5e6f70",
-      "station_name": "Site JKUAT",
-      "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
-      "alert_type": "livestock",
-      "severity": "moderate",
-      "message": "WBGT exceeded the configured comfort threshold.",
-      "is_active": true,
-      "resolved_at": null,
-      "runoff_risk_score": null,
-      "rainfall_summary": null,
-      "pressure_trend": null,
-      "recommendation": "",
-      "wbgt_value": 29.6,
-      "threshold": 22.0,
-      "created_at": "2026-07-09T11:05:02Z",
-      "updated_at": "2026-07-09T11:05:02Z"
-    }
-  ]
-}`,
-  },
-  {
-    id: "alert-detail",
-    method: "GET",
-    path: "/alerts/{id}/",
-    title: "Alert Detail",
-    desc: "Retrieve a single alert by its UUID.",
-    params: [{ name: "id", type: "uuid", desc: "Alert ID" }],
-    response: `{
-  "id": "6f1c9e2a-2b0e-4b7a-9b7a-5a1f2c3d4e5f",
-  "station_name": "Site JKUAT",
-  "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
-  "alert_type": "hydrology",
-  "severity": "high",
-  "message": "Rapid pressure drop with active rainfall — elevated runoff risk.",
-  "is_active": true,
-  "resolved_at": null,
-  "runoff_risk_score": 82.0,
-  "rainfall_summary": { "last_hour_mm": 12.4, "last_24h_mm": 38.0 },
-  "pressure_trend": "falling",
-  "recommendation": "DELAY_APPLICATION",
-  "wbgt_value": null,
-  "threshold": null,
-  "created_at": "2026-07-09T14:20:11Z",
-  "updated_at": "2026-07-09T14:20:11Z"
-}`,
-  },
-  {
-    id: "webhooks-list-create",
-    method: "GET / POST",
-    path: "/alerts/webhooks/",
-    title: "List / Create Webhook Subscriptions",
-    desc: "Manage your own webhook subscriptions from the Webhooks page in your dashboard while signed in. The signing secret is only ever returned on creation; list/detail responses always send secret: null.",
-    params: [
-      { name: "url", type: "string", desc: "POST body — HTTPS endpoint that will receive the webhook" },
-      { name: "event_types", type: "array", desc: "POST body — subset of [\"alert.created\", \"alert.resolved\"] (defaults to both)" },
-      { name: "alert_type", type: "string", desc: "POST body, optional — narrow to hydrology or livestock" },
-      { name: "station_slug", type: "string", desc: "POST body, optional — narrow to one station" },
-    ],
-    response: `// POST response — the only time "secret" is included
-{
-  "id": "b2e4f6a8-1c3d-4e5f-9a0b-1c2d3e4f5a6b",
-  "url": "https://example.com/hooks/conduit",
-  "secret": "5b2a...redacted...9f3c",
-  "event_types": ["alert.created", "alert.resolved"],
-  "alert_type": "livestock",
-  "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
-  "is_active": true,
-  "created_at": "2026-07-10T09:00:00Z"
-}`,
-  },
-  {
-    id: "webhook-detail",
-    method: "GET / DELETE",
-    path: "/alerts/webhooks/{id}/",
-    title: "Webhook Detail / Delete",
-    desc: "Retrieve or permanently delete one of your webhook subscriptions. Owner-only — returns 404 for subscriptions that belong to another account.",
-    params: [{ name: "id", type: "uuid", desc: "Subscription ID" }],
-    response: `{
-  "id": "b2e4f6a8-1c3d-4e5f-9a0b-1c2d3e4f5a6b",
-  "url": "https://example.com/hooks/conduit",
-  "secret": null,
-  "event_types": ["alert.created", "alert.resolved"],
-  "alert_type": "livestock",
-  "station_slug": "kenya-kiambu-jkuat-iot-aws-conduitempathy1",
-  "is_active": true,
-  "created_at": "2026-07-10T09:00:00Z"
-}`,
-  },
-  {
-    id: "webhook-test",
-    method: "POST",
-    path: "/alerts/webhooks/{id}/test/",
-    title: "Send Test Ping",
-    desc: "Sends a synthetic webhook.test event to the subscription URL so you can verify your endpoint and HMAC signature check before relying on it in production.",
-    params: [{ name: "id", type: "uuid", desc: "Subscription ID" }],
-    response: `{
-  "success": true,
-  "status_code": 200
-}`,
-  },
-  {
-    id: "webhook-deliveries",
-    method: "GET",
-    path: "/alerts/webhooks/{id}/deliveries/",
-    title: "Delivery History",
-    desc: "Paginated audit trail of delivery attempts (and retries) for a subscription — useful for debugging a subscriber endpoint.",
-    params: [
-      { name: "id", type: "uuid", desc: "Subscription ID" },
-      { name: "page", type: "integer", desc: "Page number for pagination" },
-    ],
-    response: `{
-  "count": 3,
-  "next": null,
-  "previous": null,
-  "results": [
-    {
-      "id": "d1e2f3a4-b5c6-4d7e-8f90-1a2b3c4d5e6f",
-      "event_type": "alert.created",
-      "success": true,
-      "response_status": 200,
-      "error_message": "",
-      "attempt_count": 1,
-      "created_at": "2026-07-10T09:05:00Z",
-      "delivered_at": "2026-07-10T09:05:00Z"
     }
   ]
 }`,
@@ -489,9 +341,15 @@ export const dataModel = [
   {
     group: "Rain",
     fields: [
-      ["rain.gauge_1_current / gauge_2_current", "Instantaneous rain gauge reading (mm)"],
+      [
+        "rain.gauge_1_current / gauge_2_current",
+        "Instantaneous rain gauge reading (mm)",
+      ],
       ["rain.gauge_1_today / gauge_2_today", "Rain accumulated today (mm)"],
-      ["rain.gauge_1_prior / gauge_2_prior", "Rain accumulated the prior day (mm)"],
+      [
+        "rain.gauge_1_prior / gauge_2_prior",
+        "Rain accumulated the prior day (mm)",
+      ],
     ],
   },
   {
@@ -508,14 +366,20 @@ export const dataModel = [
     fields: [
       ["indices.heat_index", "Heat index (°C)"],
       ["indices.wet_bulb", "Wet bulb temperature (°C)"],
-      ["indices.wbgt", "Wet Bulb Globe Temperature (°C) — used for livestock heat-stress alerts"],
+      [
+        "indices.wbgt",
+        "Wet Bulb Globe Temperature (°C) — used for livestock heat-stress alerts",
+      ],
     ],
   },
   {
     group: "Alert (hydrology)",
     fields: [
       ["runoff_risk_score", "0–100 runoff risk score"],
-      ["rainfall_summary", "JSON breakdown of recent rainfall used to compute the score"],
+      [
+        "rainfall_summary",
+        "JSON breakdown of recent rainfall used to compute the score",
+      ],
       ["pressure_trend", "rising, falling, or steady"],
       ["recommendation", "Free-text recommendation, e.g. DELAY_APPLICATION"],
     ],
@@ -542,13 +406,37 @@ export const errorCodes = [
 ];
 
 export const commonErrors = [
-  ["Invalid API Key", "401", "The X-API-KEY provided doesn't match an active key."],
-  ["Missing API Key", "401", "The X-API-KEY header was not provided on a telemetry/alerts request."],
-  ["Rate Limit Exceeded (per minute)", "401", "Too many requests this minute for this API key."],
-  ["Daily Quota Exceeded", "401", "The API key's daily request quota has been used up."],
+  [
+    "Invalid API Key",
+    "401",
+    "The X-API-KEY provided doesn't match an active key.",
+  ],
+  [
+    "Missing API Key",
+    "401",
+    "The X-API-KEY header was not provided on a telemetry/alerts request.",
+  ],
+  [
+    "Rate Limit Exceeded (per minute)",
+    "401",
+    "Too many requests this minute for this API key.",
+  ],
+  [
+    "Daily Quota Exceeded",
+    "401",
+    "The API key's daily request quota has been used up.",
+  ],
   ["Invalid Slug", "404", "The station slug does not match any station."],
-  ["Both Dates Required", "400", "start/end (or start_date/end_date) must be supplied together, not just one."],
-  ["Invalid Resolution", "400", "Timeline resolution must be one of minutely, hourly, daily."],
+  [
+    "Both Dates Required",
+    "400",
+    "start/end (or start_date/end_date) must be supplied together, not just one.",
+  ],
+  [
+    "Invalid Resolution",
+    "400",
+    "Timeline resolution must be one of minutely, hourly, daily.",
+  ],
 ];
 
 export const bestPractices = [
@@ -559,27 +447,4 @@ export const bestPractices = [
   "Store your webhook secret when you create a subscription — it is never shown again after the POST response.",
   "Verify the X-Conduit-Signature header (HMAC-SHA256 of the raw body, using your webhook secret) before trusting a delivered payload.",
   "Handle 429s with backoff — both per-minute and daily-quota limits apply per API key.",
-];
-
-export const faq = [
-  [
-    "What is the base URL for the API?",
-    "The base URL is whatever NEXT_PUBLIC_API_URL is set to for this deployment (e.g. http://127.0.0.1:8000/api/v1 locally). All paths in this reference are relative to it.",
-  ],
-  [
-    "How do I get an API key?",
-    "Create an account, sign in, and generate one from the API Access tab of your dashboard.",
-  ],
-  [
-    "What are the rate limits?",
-    "Each API key defaults to 60 requests/minute and 10,000 requests/day. Check current usage at /auth/api-usage/.",
-  ],
-  [
-    "Can I get historical data?",
-    "Yes — use /stations/{slug}/history/ with start_date/end_date for raw data, or /timeline/ and /summary/ for aggregated data.",
-  ],
-  [
-    "How do webhooks get signed?",
-    "Every delivery includes an X-Conduit-Signature header: sha256=<hex hmac> computed over the raw request body using your subscription's secret.",
-  ],
 ];

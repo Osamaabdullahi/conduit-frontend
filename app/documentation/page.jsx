@@ -10,17 +10,14 @@ import DataModel from "../../components/docs/DataModel";
 import FilteringPagination from "../../components/docs/FilteringPagination";
 import ErrorHandling from "../../components/docs/ErrorHandling";
 import BestPractices from "../../components/docs/BestPractices";
-import FAQ from "../../components/docs/FAQ";
 import CodeExamples from "../../components/docs/CodeExamples";
 import {
   nav,
   endpoints,
-  alertEndpoints,
   dataModel,
   errorCodes,
   commonErrors,
   bestPractices,
-  faq,
 } from "../../libs/docsData";
 
 export default function DocsPage() {
@@ -54,13 +51,11 @@ export default function DocsPage() {
           <RateLimits />
 
           <EndpointsList endpoints={endpoints} />
-          <EndpointsList endpoints={alertEndpoints} />
 
           <DataModel dataModel={dataModel} />
           <FilteringPagination />
           <ErrorHandling errorCodes={errorCodes} commonErrors={commonErrors} />
           <BestPractices bestPractices={bestPractices} />
-          <FAQ faq={faq} />
           <CodeExamples />
         </main>
       </div>

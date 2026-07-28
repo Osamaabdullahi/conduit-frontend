@@ -27,11 +27,6 @@ export default function ProfileSection({ user, successMessage }) {
           </span>
         </div>
       </div>
-
-      <p className="mt-4 text-xs text-muted">
-        Profile editing isn&apos;t available yet — the API currently exposes
-        account details as read-only.
-      </p>
     </div>
   );
 }
