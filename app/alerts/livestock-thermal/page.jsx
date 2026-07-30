@@ -4,6 +4,154 @@ export const metadata = {
     "Real-time WBGT monitoring with automated webhook alerts for livestock heat stress detection.",
 };
 
+function AlertTriangleIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+
+function LightbulbIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+    </svg>
+  );
+}
+
+function ZapIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+    </svg>
+  );
+}
+
+function BarChartIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 3v18h18" />
+      <path d="M18 17V9" />
+      <path d="M13 17V5" />
+      <path d="M8 17v-3" />
+    </svg>
+  );
+}
+
+function ScaleIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+      <path d="M7 21h10" />
+      <path d="M12 3v18" />
+      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+    </svg>
+  );
+}
+
+function BellIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+      <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+    </svg>
+  );
+}
+
+function FlameIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
 export default function LivestockAlertsPage() {
   return (
     <div className="min-h-screen border-t border-line bg-bg">
@@ -41,7 +189,7 @@ export default function LivestockAlertsPage() {
         {/* Problem & Solution */}
         <div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="rounded-lg border border-red-200 bg-red-50 p-6">
-            <div className="mb-3 text-2xl">⚠️</div>
+            <AlertTriangleIcon className="mb-3 h-7 w-7 text-red-600" />
             <h3 className="mb-2 font-display text-lg font-semibold text-red-700">
               Problem
             </h3>
@@ -69,7 +217,7 @@ export default function LivestockAlertsPage() {
           </div>
 
           <div className="rounded-lg border border-green-200 bg-green-50 p-6">
-            <div className="mb-3 text-2xl">💡</div>
+            <LightbulbIcon className="mb-3 h-7 w-7 text-green-700" />
             <h3 className="mb-2 font-display text-lg font-semibold text-green-700">
               Solution
             </h3>
@@ -79,8 +227,9 @@ export default function LivestockAlertsPage() {
               station crosses your threshold.
             </p>
             <div className="mt-4 rounded-md bg-white/50 p-3">
-              <p className="text-sm font-medium text-green-700">
-                ⚡ Real-time • Automated • Proactive
+              <p className="flex items-center gap-2 text-sm font-medium text-green-700">
+                <ZapIcon className="h-4 w-4 shrink-0" />
+                Real-time • Automated • Proactive
               </p>
             </div>
           </div>
@@ -93,14 +242,14 @@ export default function LivestockAlertsPage() {
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-line bg-bg-soft p-5 text-center">
-              <div className="mb-2 text-2xl">📊</div>
+              <BarChartIcon className="mx-auto mb-2 h-6 w-6 text-accent" />
               <h4 className="mb-1 font-semibold text-ink">Input</h4>
               <p className="text-sm text-ink-soft">
                 WBGT value on each new weather measurement
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg-soft p-5 text-center">
-              <div className="mb-2 text-2xl">⚖️</div>
+              <ScaleIcon className="mx-auto mb-2 h-6 w-6 text-accent" />
               <h4 className="mb-1 font-semibold text-ink">Rule</h4>
               <p className="text-sm text-ink-soft">
                 WBGT threshold <br />
@@ -108,7 +257,7 @@ export default function LivestockAlertsPage() {
               </p>
             </div>
             <div className="rounded-lg border border-line bg-bg-soft p-5 text-center">
-              <div className="mb-2 text-2xl">🔔</div>
+              <BellIcon className="mx-auto mb-2 h-6 w-6 text-accent" />
               <h4 className="mb-1 font-semibold text-ink">Action</h4>
               <p className="text-sm text-ink-soft">
                 Trigger a signed webhook notification
@@ -270,7 +419,10 @@ export default function LivestockAlertsPage() {
           <div className="rounded-lg border border-card-line bg-card px-6 py-4">
             <div className="mb-3.5 flex justify-between border-b border-card-line pb-3.5 font-mono text-[0.68rem] tracking-wide text-[#9a9c8a]">
               <span>WEBHOOK PAYLOAD</span>
-              <span className="text-[#c15a2c]">⚠ ALERT</span>
+              <span className="flex items-center gap-1 text-[#c15a2c]">
+                <AlertTriangleIcon className="h-3 w-3" />
+                ALERT
+              </span>
             </div>
             <pre className="whitespace-pre-wrap break-words font-mono text-[0.8rem] leading-relaxed text-[#d7d8c8]">
               <code>{`{
@@ -301,7 +453,7 @@ export default function LivestockAlertsPage() {
         {/* Key Takeaway */}
         <section className="mb-12">
           <div className="rounded-lg border-2 border-accent bg-accent/5 p-8 text-center">
-            <div className="mb-3 text-3xl">🔥</div>
+            <FlameIcon className="mx-auto mb-3 h-8 w-8 text-accent" />
             <h2 className="font-display text-2xl font-semibold text-ink">
               Final Takeaway
             </h2>
@@ -313,14 +465,17 @@ export default function LivestockAlertsPage() {
               , not just an API.
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <span className="inline-block rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
-                ✓ Real-time
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
+                <CheckIcon className="h-3.5 w-3.5" />
+                Real-time
               </span>
-              <span className="inline-block rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
-                ✓ Automated
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
+                <CheckIcon className="h-3.5 w-3.5" />
+                Automated
               </span>
-              <span className="inline-block rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
-                ✓ Proactive
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-green-bg px-4 py-1.5 text-sm text-green">
+                <CheckIcon className="h-3.5 w-3.5" />
+                Proactive
               </span>
             </div>
           </div>

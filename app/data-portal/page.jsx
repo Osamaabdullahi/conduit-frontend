@@ -16,12 +16,13 @@ export default function DataPortalPage() {
   const [activeTab, setActiveTab] = useState("stations");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
   const { apiKey, isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const fetchStations = async () => {
       if (!isAuthenticated) {
-        setError("Please sign in to access weather data.");
+        setNeedsAuth(true);
         setIsLoading(false);
         return;
       }
@@ -36,6 +37,7 @@ export default function DataPortalPage() {
 
       setIsLoading(true);
       setError(null);
+      setNeedsAuth(false);
 
       try {
         // /stations/current/ only returns live readings (it has no status
@@ -122,6 +124,48 @@ export default function DataPortalPage() {
     );
   }
 
+  if (needsAuth) {
+    return (
+      <div className="min-h-screen border-t border-line bg-bg py-8">
+        <div className="mx-auto max-w-6xl px-4">
+          <PageHeader />
+          <div className="rounded-lg border border-line bg-bg-soft p-6 text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mx-auto mb-3 text-ink-soft"
+            >
+              <circle cx="12" cy="16" r="1" />
+              <rect x="3" y="10" width="18" height="12" rx="2" />
+              <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+            </svg>
+            <h3 className="text-lg font-semibold text-ink">
+              Sign Up or Log In Required
+            </h3>
+            <p className="text-ink-soft">
+              You need to sign up or log in to access weather data.
+            </p>
+            <div className="mt-4">
+              <a
+                href="/auth/sign-up"
+                className="inline-block rounded-md bg-ink px-4 py-2 text-sm text-white hover:bg-[#2a2c1f]"
+              >
+                Sign Up / Log In
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="min-h-screen border-t border-line bg-bg py-8">
@@ -186,5 +230,5 @@ export default function DataPortalPage() {
 const metadata = {
   title: "Weather Data Portal — JKUAT Live Weather API",
   description:
-    "Simple weather data portal for researchers and students. View and download weather data from IoT stations across East Africa.",
+    "Simple weather data portal for researchers and students. View and download weather data from IoT stations across the country",
 };
