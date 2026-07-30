@@ -80,8 +80,8 @@ export default function Hero() {
     // Initial fetch
     fetchWeatherData();
 
-    // Set up interval to fetch every 15 minutes (900,000 ms)
-    intervalId = setInterval(fetchWeatherData, 900000);
+    // Set up interval to fetch every 10 minutes (600,000 ms)
+    intervalId = setInterval(fetchWeatherData, 600000);
 
     return () => {
       cancelled = true;
@@ -152,7 +152,9 @@ export default function Hero() {
           <div className="rounded-lg border border-line bg-white px-[22px] py-4 shadow-[0_12px_30px_-18px_rgba(20,20,15,0.35)]">
             <div className="mb-3.5 flex flex-col gap-1 border-b border-line pb-3.5">
               <div className="flex items-center justify-between font-mono text-[0.72rem] uppercase tracking-wide text-muted">
-                <span>{isLive ? "JKUAT Weather Station" : "Site JKUAT"}</span>
+                <span>
+                  {isLive ? "Current Weather — JKUAT Station" : "Site JKUAT"}
+                </span>
                 {isLive ? (
                   <span className="inline-flex items-center gap-1.5 text-green">
                     <i className="inline-block h-1.5 w-1.5 rounded-full bg-green" />{" "}
