@@ -10,7 +10,7 @@ import { apiClient } from "../libs/api";
 const BASE_NAV_LINKS = [
   { label: "Documentation", href: "/documentation" },
   { label: "Alerts", href: "/alerts" },
-  // { label: "Pricing", href: "/pricing" },
+  { label: "Blog", href: "/blog" },
 ];
 
 // Protected navigation links (only shown when logged in)
